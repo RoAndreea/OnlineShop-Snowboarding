@@ -1,0 +1,17 @@
+﻿<div>
+	<h2>Ceva</h2>
+</div>
+<h2>@Model.CurrentCategory</h2>
+
+@{ 
+	foreach(var equipment in Model.Equipment)
+	{
+		<div>
+			<h4>Equipment Name: @equipment.Name</h4>
+			<p>Price: @equipment.Price.ToString("c")</p>
+		</div>
+	}
+
+
+
+}
