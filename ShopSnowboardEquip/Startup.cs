@@ -51,6 +51,7 @@ namespace ShopSnowboardEquip
 				app.UseExceptionHandler("/Home/Error");
 				app.UseHsts();
 			}
+
 			loggerFactory.AddConsole();
 			app.UseHttpsRedirection();
 			app.UseStatusCodePages();

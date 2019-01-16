@@ -1,17 +1,24 @@
 ﻿<div>
-	<h2>Ceva</h2>
+	<h2>All equipments are shown here</h2>
 </div>
 <h2>@Model.CurrentCategory</h2>
 
 @{ 
 	foreach(var equipment in Model.Equipment)
 	{
-		<div>
-			<h4>Equipment Name: @equipment.Name</h4>
-			<p>Price: @equipment.Price.ToString("c")</p>
-		</div>
+        <div class="col-sm-4 col-lg-4 col-md-4">
+            <div class="thumbnail">
+                <img src="@equipment.ImageThumbnailUrl" alt="" />
+                <div class="caption">
+                    <h3 class="pull-right">@equipment.Price.ToString("c")</h3>
+                    <h3>
+                        <a>@equipment.Name</a>
+                    </h3>
+                    <p>@equipment.ShortDescription</p>
+                </div>
+            </div>
+        </div>
+
 	}
-
-
 
 }

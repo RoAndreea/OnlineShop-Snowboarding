@@ -21,7 +21,7 @@ namespace ShopSnowboardEquip.Controllers
 			ViewBag.Name = "DotNet, How?";
 			EquipmentListViewModel vm = new EquipmentListViewModel();
 			vm.Equipment = _equipmentRepository.Equipments;
-			vm.CurrentCategory = "Equipment Category";
+			vm.CurrentCategory = "EquipmentCategory";
 			return View(vm);
         }
     }
