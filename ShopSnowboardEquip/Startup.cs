@@ -7,35 +7,49 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using ShopSnowboardEquip.Data;
 using ShopSnowboardEquip.Data.interfaces;
 using ShopSnowboardEquip.Data.mocks;
+using ShopSnowboardEquip.Data.Repositories;
 
 namespace ShopSnowboardEquip
 {
 	public class Startup
 	{
-		public Startup(IConfiguration configuration)
+		/*public Startup(IConfiguration configuration)
 		{
 			Configuration = configuration;
 		}
+		*/
+		private IConfigurationRoot _configurationRoot;
 
+		public Startup(IHostingEnvironment hostingEnvironment)
+		{
+			_configurationRoot = new ConfigurationBuilder().SetBasePath(hostingEnvironment.ContentRootPath)
+				.AddJsonFile("appsettings.json")
+				.Build();
+		}
+
+
+		
 		public IConfiguration Configuration { get; }
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.Configure<CookiePolicyOptions>(options =>
+			/*.Configure<CookiePolicyOptions>(options =>
 			{
 				// This lambda determines whether user consent for non-essential cookies is needed for a given request.
 				options.CheckConsentNeeded = context => true;
 				options.MinimumSameSitePolicy = SameSiteMode.None;
-			});
-
-			services.AddTransient<IEquipmentRepository, MockEquipmentRepository>();
-			services.AddTransient<ICategoryRepository, MockCategoryRepository>();
+			}); */
+			services.AddDbContext<AppDbContext>(options => options.UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection")));
+			services.AddTransient<IEquipmentRepository, EquipmentRepository>();
+			services.AddTransient<ICategoryRepository, CategoryRepository>();
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 		}
 
