@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -48,6 +49,11 @@ namespace ShopSnowboardEquip
 				options.CheckConsentNeeded = context => true;
 				options.MinimumSameSitePolicy = SameSiteMode.None;
 			}); */
+
+			//Authentication, Identity config
+			services.AddIdentity<IdentityUser, IdentityRole>()
+				.AddEntityFrameworkStores<AppDbContext>();
+
 			services.AddDbContext<AppDbContext>(options => options
                     .UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection")));
 
@@ -81,7 +87,7 @@ namespace ShopSnowboardEquip
 			app.UseStaticFiles();
 			app.UseCookiePolicy();
             app.UseSession();
-
+			app.UseIdentity();
 			app.UseMvc(routes =>
 			{
                 routes.MapRoute(
