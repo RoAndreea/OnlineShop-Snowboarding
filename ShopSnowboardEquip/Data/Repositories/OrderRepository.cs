@@ -1,9 +1,6 @@
 ﻿using ShopSnowboardEquip.Data.interfaces;
 using ShopSnowboardEquip.Data.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ShopSnowboardEquip.Data.Repositories
 {
@@ -39,7 +36,7 @@ namespace ShopSnowboardEquip.Data.Repositories
                 };
 
                 _appDbContext.OrderDetails.Add(orderDetail);
-            }
+            } 
 
             _appDbContext.SaveChanges();
         }

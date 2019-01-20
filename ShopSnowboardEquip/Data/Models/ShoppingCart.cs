@@ -33,18 +33,18 @@ namespace ShopSnowboardEquip.Data.Models
             return new ShoppingCart(context) { ShoppingCartId = cartId };
         }
 
-        public void AddToCart(Equipment drink, int amount)
+        public void AddToCart(Equipment equipment, int amount)
         {
             var shoppingCartItem =
                     _appDbContext.ShoppingCartItems.SingleOrDefault(
-                        s => s.Equipment.EquipmentId == drink.EquipmentId && s.ShoppingCartId == ShoppingCartId);
+                        s => s.Equipment.EquipmentId == equipment.EquipmentId && s.ShoppingCartId == ShoppingCartId);
 
             if (shoppingCartItem == null)
             {
                 shoppingCartItem = new ShoppingCartItem
                 {
                     ShoppingCartId = ShoppingCartId,
-                    Equipment = drink,
+                    Equipment = equipment,
                     Amount = 1
                 };
 
@@ -57,11 +57,11 @@ namespace ShopSnowboardEquip.Data.Models
             _appDbContext.SaveChanges();
         }
 
-        public int RemoveFromCart(Equipment drink)
+        public int RemoveFromCart(Equipment equipment)
         {
             var shoppingCartItem =
                     _appDbContext.ShoppingCartItems.SingleOrDefault(
-                        s => s.Equipment.EquipmentId == drink.EquipmentId && s.ShoppingCartId == ShoppingCartId);
+                        s => s.Equipment.EquipmentId == equipment .EquipmentId && s.ShoppingCartId == ShoppingCartId);
 
             var localAmount = 0;
 
