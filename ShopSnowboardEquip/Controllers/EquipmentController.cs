@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShopSnowboardEquip.Data.interfaces;
+using ShopSnowboardEquip.Models;
 using ShopSnowboardEquip.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ShopSnowboardEquip.Controllers
 {
@@ -16,13 +20,32 @@ namespace ShopSnowboardEquip.Controllers
 			_equipmentRepository = equipmentRepository;
 
 		}
-        public ViewResult List()
+        public ViewResult List(string category)
         {
-			ViewBag.Name = "DotNet, How?";
-			EquipmentListViewModel vm = new EquipmentListViewModel();
-			vm.Equipment = _equipmentRepository.Equipments;
-			vm.CurrentCategory = "EquipmentCategory";
-			return View(vm);
+            string _category = category;
+            IEnumerable<Equipment> equipments;
+            string currentCategory = string.Empty;
+
+            if (string.IsNullOrEmpty(category))
+            {
+                equipments = _equipmentRepository.Equipments.OrderBy(p => p.EquipmentId);
+                currentCategory = "All equipments";
+            }
+            else
+            {
+                if (string.Equals("SnowAccessories", _category, StringComparison.OrdinalIgnoreCase))
+                    equipments = _equipmentRepository.Equipments.Where(p => p.Category.CategoryName.Equals("SnowAccessories")).OrderBy(p => p.Name);
+                else
+                    equipments = _equipmentRepository.Equipments.Where(p => p.Category.CategoryName.Equals("SnowOutfit")).OrderBy(p => p.Name);
+
+                currentCategory = _category;
+            }
+
+            return View(new EquipmentListViewModel
+            {
+                Equipment = equipments,
+                CurrentCategory = currentCategory
+            });
         }
     }
 }

@@ -4,16 +4,29 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using ShopSnowboardEquip.Data.interfaces;
 using ShopSnowboardEquip.Models;
+using ShopSnowboardEquip.ViewModels;
 
 namespace ShopSnowboardEquip.Controllers
 {
 	public class HomeController : Controller
 	{
-		public IActionResult Index()
+        private readonly IEquipmentRepository _equipmentRepository;
+        public HomeController(IEquipmentRepository equipmentRepository)
+        {
+            _equipmentRepository = equipmentRepository;
+        }
+
+        public ViewResult Index()
 		{
-			return View();
-		}
+            var homeViewModel = new HomeViewModel
+            {
+                PreferredEquipments = _equipmentRepository.PreferredEquipments
+            };
+
+            return View(homeViewModel);
+        }
 
 		public IActionResult About()
 		{

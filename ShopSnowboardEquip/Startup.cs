@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using ShopSnowboardEquip.Data;
 using ShopSnowboardEquip.Data.interfaces;
 using ShopSnowboardEquip.Data.mocks;
+using ShopSnowboardEquip.Data.Models;
 using ShopSnowboardEquip.Data.Repositories;
 
 namespace ShopSnowboardEquip
@@ -47,14 +48,22 @@ namespace ShopSnowboardEquip
 				options.CheckConsentNeeded = context => true;
 				options.MinimumSameSitePolicy = SameSiteMode.None;
 			}); */
-			services.AddDbContext<AppDbContext>(options => options.UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection")));
+			services.AddDbContext<AppDbContext>(options => options
+                    .UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection")));
+
 			services.AddTransient<IEquipmentRepository, EquipmentRepository>();
 			services.AddTransient<ICategoryRepository, CategoryRepository>();
-			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-		}
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped(sp => ShoppingCart.GetCart(sp));
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMemoryCache();
+            services.AddSession();
+        }
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+		public void Configure(AppDbContext context, IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
 		{
 			if (env.IsDevelopment())
 			{
@@ -71,13 +80,21 @@ namespace ShopSnowboardEquip
 			app.UseStatusCodePages();
 			app.UseStaticFiles();
 			app.UseCookiePolicy();
+            app.UseSession();
 
 			app.UseMvc(routes =>
 			{
-				routes.MapRoute(
+                routes.MapRoute(
+                    name: "categoryfilter",
+                    template: "Equipment/{action}/{category?}",
+                    defaults: new { Controller = "Equipment", action = "List" });
+
+                routes.MapRoute(
 					name: "default",
 					template: "{controller=Home}/{action=Index}/{id?}");
 			});
+
+            DbInitializer.Seed(context, app);
 		}
 	}
 }
