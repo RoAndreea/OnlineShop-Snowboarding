@@ -59,8 +59,9 @@ namespace ShopSnowboardEquip
 
 			services.AddTransient<IEquipmentRepository, EquipmentRepository>();
 			services.AddTransient<ICategoryRepository, CategoryRepository>();
+			services.AddTransient<IOrderRepository, OrderRepository>();
 
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped(sp => ShoppingCart.GetCart(sp));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
