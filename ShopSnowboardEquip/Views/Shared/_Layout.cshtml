@@ -29,14 +29,25 @@
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">ShopSnowboardEquip</a>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav mr-auto">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    @await Component.InvokeAsync("CategoryChoice")
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact Us</a></li>
-                    @await Component.InvokeAsync("ShoppingCartSummary")
-					@await  Html.PartialAsync("LoginPartial")
-                </ul>
+				<ul class="nav navbar-nav mr-auto">
+					<li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+					@await Component.InvokeAsync("CategoryChoice")
+					<li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+					<li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact Us</a></li>
+					@await Component.InvokeAsync("ShoppingCartSummary")
+					@await Html.PartialAsync("LoginPartial")
+
+					<li>
+						@if (User.Identity.IsAuthenticated)
+						{
+							if (User.IsInRole("Admin"))
+							{
+								<a asp-area="" asp-controller="Equipment" asp-action="Index">Manage Products</a>
+							}
+						}
+					</li>
+
+				</ul>
             </div>
         </div>
     </nav>

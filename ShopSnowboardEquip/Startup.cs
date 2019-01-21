@@ -37,7 +37,7 @@ namespace ShopSnowboardEquip
 		}
 
 
-		
+
 		public IConfiguration Configuration { get; }
 
 		// This method gets called by the runtime. Use this method to add services to the container.
@@ -55,22 +55,23 @@ namespace ShopSnowboardEquip
 				.AddEntityFrameworkStores<AppDbContext>();
 
 			services.AddDbContext<AppDbContext>(options => options
-                    .UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection")));
+					.UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection")));
 
 			services.AddTransient<IEquipmentRepository, EquipmentRepository>();
 			services.AddTransient<ICategoryRepository, CategoryRepository>();
 			services.AddTransient<IOrderRepository, OrderRepository>();
+			services.AddTransient<IGenderRepository, GenderRepository>();
 
 			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddScoped(sp => ShoppingCart.GetCart(sp));
+			services.AddScoped(sp => ShoppingCart.GetCart(sp));
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddMemoryCache();
-            services.AddSession();
-        }
+			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+			services.AddMemoryCache();
+			services.AddSession();
+		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(AppDbContext context, IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+		public void Configure(AppDbContext context, IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IServiceProvider serviceProvider)
 		{
 			if (env.IsDevelopment())
 			{
@@ -87,21 +88,55 @@ namespace ShopSnowboardEquip
 			app.UseStatusCodePages();
 			app.UseStaticFiles();
 			app.UseCookiePolicy();
-            app.UseSession();
+			app.UseSession();
 			app.UseIdentity();
 			app.UseMvc(routes =>
 			{
-                routes.MapRoute(
-                    name: "categoryfilter",
-                    template: "Equipment/{action}/{category?}",
-                    defaults: new { Controller = "Equipment", action = "List" });
+				routes.MapRoute(
+					name: "categoryfilter",
+					template: "Equipment/{action}/{category?}",
+					defaults: new { Controller = "Equipment", action = "List" });
 
-                routes.MapRoute(
+				routes.MapRoute(
 					name: "default",
 					template: "{controller=Home}/{action=Index}/{id?}");
 			});
 
-            DbInitializer.Seed(context, app);
+			DbInitializer.Seed(context, app);
+			CreateRoles(serviceProvider).Wait();
+		}
+
+		private async Task CreateRoles(IServiceProvider serviceProvider)
+		{
+			//initializing custom roles   
+			var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+			var UserManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+			string[] roleNames = { "Admin" };
+			IdentityResult roleResult;
+
+			foreach (var roleName in roleNames)
+			{
+				var roleExist = await RoleManager.RoleExistsAsync(roleName);
+				if (!roleExist)
+				{
+					//create the roles and seed them to the database: Question 1  
+					roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName));
+				}
+			}
+
+			IdentityUser user = await UserManager.FindByNameAsync("admin@gmail.com");
+
+			if (user == null)
+			{
+				user = new IdentityUser()
+				{
+					UserName = "admin@yahoo.com",
+					Email = "admin@yahoo.com",
+				};
+				await UserManager.CreateAsync(user, "Test@123");
+			}
+			await UserManager.AddToRoleAsync(user, "Admin");
+
 		}
 	}
 }

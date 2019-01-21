@@ -18,6 +18,9 @@ namespace ShopSnowboardEquip.Models
 		public bool IsPreferredEquipment { get; set; }
 		public bool InStock { get; set; }
 		public int CategoryId { get; set; }
+		public int GenderId { get; set; }
 		public virtual Category Category { get; set; }
+		public virtual Gender Gender { get; set; }
+		
 	}
 }

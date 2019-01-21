@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopSnowboardEquip.Data;
 
 namespace ShopSnowboardEquip.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190121201457_gender123")]
+    partial class gender123
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -201,9 +203,13 @@ namespace ShopSnowboardEquip.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("EquipmentId");
+
                     b.Property<string>("GenderName");
 
                     b.HasKey("GenderId");
+
+                    b.HasIndex("EquipmentId");
 
                     b.ToTable("Genders");
                 });
@@ -306,8 +312,6 @@ namespace ShopSnowboardEquip.Migrations
 
                     b.Property<int>("CategoryId");
 
-                    b.Property<int>("GenderId");
-
                     b.Property<string>("ImageThumbnailUrl");
 
                     b.Property<string>("ImageUrl");
@@ -327,8 +331,6 @@ namespace ShopSnowboardEquip.Migrations
                     b.HasKey("EquipmentId");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("GenderId");
 
                     b.ToTable("Equipments");
                 });
@@ -378,6 +380,14 @@ namespace ShopSnowboardEquip.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("ShopSnowboardEquip.Data.Models.Gender", b =>
+                {
+                    b.HasOne("ShopSnowboardEquip.Models.Equipment", "Equipment")
+                        .WithMany()
+                        .HasForeignKey("EquipmentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("ShopSnowboardEquip.Data.Models.OrderDetail", b =>
                 {
                     b.HasOne("ShopSnowboardEquip.Models.Equipment", "Equipment")
@@ -403,11 +413,6 @@ namespace ShopSnowboardEquip.Migrations
                     b.HasOne("ShopSnowboardEquip.Data.Models.Category", "Category")
                         .WithMany("Equipmentints")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("ShopSnowboardEquip.Data.Models.Gender", "Gender")
-                        .WithMany("Equipments")
-                        .HasForeignKey("GenderId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

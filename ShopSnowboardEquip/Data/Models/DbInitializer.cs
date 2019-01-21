@@ -33,7 +33,8 @@ namespace ShopSnowboardEquip.Data.Models
                         ImageUrl = "/images/placa1.PNG",
                         InStock = true,
                         IsPreferredEquipment = true,
-                        ImageThumbnailUrl = "/images/placa2.PNG"
+                        ImageThumbnailUrl = "/images/placa2.PNG",
+						Gender = Genders["Unisex"]
                     },
                     new Equipment
                     {
@@ -45,8 +46,10 @@ namespace ShopSnowboardEquip.Data.Models
                         ImageUrl = "/images/placa2.PNG",
                         InStock = true,
                         IsPreferredEquipment = false,
-                        ImageThumbnailUrl = "/images/placa3.PNG"
-                    },
+                        ImageThumbnailUrl = "/images/placa3.PNG",
+						Gender = Genders["Unisex"]
+
+					},
                     new Equipment
                     {
                         Name = "Ski goggles",
@@ -57,8 +60,9 @@ namespace ShopSnowboardEquip.Data.Models
                         ImageUrl = "/images/ochelari2.PNG",
                         InStock = true,
                         IsPreferredEquipment = false,
-                        ImageThumbnailUrl = "/images/ochelari1.PNG"
-                    },
+                        ImageThumbnailUrl = "/images/ochelari1.PNG",
+						Gender = Genders["Unisex"]
+					},
                     new Equipment
                     {
                         Name = "Ski Helmet",
@@ -69,8 +73,9 @@ namespace ShopSnowboardEquip.Data.Models
                         ImageUrl = "/images/casca1.PNG",
                         InStock = true,
                         IsPreferredEquipment = false,
-                        ImageThumbnailUrl = "/images/casca2.PNG"
-                    },
+                        ImageThumbnailUrl = "/images/casca2.PNG",
+						Gender = Genders["Unisex"]
+					},
                     new Equipment
                     {
                         Name = "Boots",
@@ -81,8 +86,9 @@ namespace ShopSnowboardEquip.Data.Models
                         ImageUrl = "/images/boots3.PNG",
                         InStock = true,
                         IsPreferredEquipment = false,
-                        ImageThumbnailUrl = "/images/boots5.PNG"
-                    },
+                        ImageThumbnailUrl = "/images/boots5.PNG",
+						Gender = Genders["Unisex"]
+					},
                     new Equipment
                     {
                         Name = "Ski Bindings",
@@ -93,8 +99,9 @@ namespace ShopSnowboardEquip.Data.Models
                         ImageUrl = "/images/legaturib1.PNG",
                         InStock = false,
                         IsPreferredEquipment = false,
-                        ImageThumbnailUrl = "/images/legaturib2.PNG"
-                    },
+                        ImageThumbnailUrl = "/images/legaturib2.PNG",
+						Gender = Genders["Unisex"]
+					},
                     new Equipment
                     {
                         Name = "Ski jacket",
@@ -105,8 +112,9 @@ namespace ShopSnowboardEquip.Data.Models
                         ImageUrl = "/images/geaca2.PNG",
                         InStock = false,
                         IsPreferredEquipment = false,
-                        ImageThumbnailUrl = "/images/geaca3.PNG"
-                    },
+                        ImageThumbnailUrl = "/images/geaca3.PNG",
+						Gender = Genders["Unisex"]
+					},
                     new Equipment
                     {
                         Name = "Ski Gloves",
@@ -117,8 +125,9 @@ namespace ShopSnowboardEquip.Data.Models
                         ImageUrl = "/images/manusib1.PNG",
                         InStock = false,
                         IsPreferredEquipment = true,
-                        ImageThumbnailUrl = "/images/manusib2.PNG"
-                    },
+                        ImageThumbnailUrl = "/images/manusib2.PNG",
+						Gender = Genders["Unisex"]
+					},
                     new Equipment
                     {
                         Name = "Ski pants",
@@ -129,8 +138,9 @@ namespace ShopSnowboardEquip.Data.Models
                         ImageUrl = "/images/pantb1.PNG",
                         InStock = false,
                         IsPreferredEquipment = false,
-                        ImageThumbnailUrl = "/images/pantb2.PNG"
-                    },
+                        ImageThumbnailUrl = "/images/pantb2.PNG",
+						Gender = Genders["Unisex"]
+					},
                     new Equipment
                     {
                         Name = "Ski socks",
@@ -141,8 +151,9 @@ namespace ShopSnowboardEquip.Data.Models
                         ImageUrl = "/images/soseteb1.PNG",
                         InStock = false,
                         IsPreferredEquipment = true,
-                        ImageThumbnailUrl = "/images/soseteb2.PNG"
-                    }
+                        ImageThumbnailUrl = "/images/soseteb2.PNG",
+						Gender = Genders["Unisex"]
+					}
                 );
             }
 
@@ -173,6 +184,35 @@ namespace ShopSnowboardEquip.Data.Models
                 return categories;
             }
         }
-    }
+
+		private static Dictionary<string, Gender> genders;
+		public static Dictionary<string, Gender> Genders
+		{
+			get
+			{
+				if (genders == null)
+				{
+					var genresList = new Gender[]
+					{
+						new Gender { GenderName = "Male" },
+						new Gender { GenderName = "Female" },
+						new Gender { GenderName = "Unisex"}
+					};
+
+					genders = new Dictionary<string, Gender>();
+
+					foreach (Gender genre in genresList)
+					{
+						genders.Add(genre.GenderName, genre);
+					}
+				}
+
+				return genders;
+			}
+		}
+
+
+
+	}
 }
 
