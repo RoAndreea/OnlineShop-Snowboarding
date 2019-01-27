@@ -26,10 +26,10 @@ namespace ShopSnowboardEquip.Controllers
 		{
 			_categoryRepository = categoryRepository;
 			_equipmentRepository = equipmentRepository;
+            _genderRepository = genderRepository;
             _context = context;
-			_genderRepository = genderRepository;
-
         }
+
         public ViewResult List(string category)
         {
             string _category = category;

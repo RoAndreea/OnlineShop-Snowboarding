@@ -23,15 +23,12 @@ namespace ShopSnowboardEquip
 {
 	public class Startup
 	{
-		/*public Startup(IConfiguration configuration)
-		{
-			Configuration = configuration;
-		}
-		*/
 		private IConfigurationRoot _configurationRoot;
 
-		public Startup(IHostingEnvironment hostingEnvironment)
+		public Startup(IHostingEnvironment hostingEnvironment, IConfiguration configuration)
 		{
+            Configuration = configuration;
+
 			_configurationRoot = new ConfigurationBuilder().SetBasePath(hostingEnvironment.ContentRootPath)
 				.AddJsonFile("appsettings.json")
 				.Build();

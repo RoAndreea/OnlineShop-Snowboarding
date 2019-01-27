@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using ShopSnowboardEquip.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace ShopSnowboardEquip.Data.Models
 {
@@ -11,8 +9,6 @@ namespace ShopSnowboardEquip.Data.Models
     {
         public static void Seed(AppDbContext context, IApplicationBuilder applicationBuilder)
         {
-            //AppDbContext context =
-            //    applicationBuilder.ApplicationServices.GetRequiredService<AppDbContext>();
 
             if (!context.Categories.Any())
             {
@@ -61,7 +57,7 @@ namespace ShopSnowboardEquip.Data.Models
                         InStock = true,
                         IsPreferredEquipment = false,
                         ImageThumbnailUrl = "/images/ochelari1.PNG",
-						Gender = Genders["Unisex"]
+						Gender = Genders["Female"]
 					},
                     new Equipment
                     {
@@ -74,7 +70,7 @@ namespace ShopSnowboardEquip.Data.Models
                         InStock = true,
                         IsPreferredEquipment = false,
                         ImageThumbnailUrl = "/images/casca2.PNG",
-						Gender = Genders["Unisex"]
+						Gender = Genders["Male"]
 					},
                     new Equipment
                     {
@@ -100,7 +96,7 @@ namespace ShopSnowboardEquip.Data.Models
                         InStock = false,
                         IsPreferredEquipment = false,
                         ImageThumbnailUrl = "/images/legaturib2.PNG",
-						Gender = Genders["Unisex"]
+						Gender = Genders["Male"]
 					},
                     new Equipment
                     {
@@ -113,7 +109,7 @@ namespace ShopSnowboardEquip.Data.Models
                         InStock = false,
                         IsPreferredEquipment = false,
                         ImageThumbnailUrl = "/images/geaca3.PNG",
-						Gender = Genders["Unisex"]
+						Gender = Genders["Female"]
 					},
                     new Equipment
                     {
@@ -126,7 +122,7 @@ namespace ShopSnowboardEquip.Data.Models
                         InStock = false,
                         IsPreferredEquipment = true,
                         ImageThumbnailUrl = "/images/manusib2.PNG",
-						Gender = Genders["Unisex"]
+						Gender = Genders["Female"]
 					},
                     new Equipment
                     {
@@ -139,7 +135,7 @@ namespace ShopSnowboardEquip.Data.Models
                         InStock = false,
                         IsPreferredEquipment = false,
                         ImageThumbnailUrl = "/images/pantb2.PNG",
-						Gender = Genders["Unisex"]
+						Gender = Genders["Male"]
 					},
                     new Equipment
                     {

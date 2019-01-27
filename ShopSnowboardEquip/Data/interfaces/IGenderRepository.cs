@@ -8,6 +8,10 @@ namespace ShopSnowboardEquip.Data.interfaces
 {
 	public interface IGenderRepository
 	{
-		IEnumerable<Gender> Genders { get; }
-	}
+		IEnumerable<Gender> Genders { get;}
+        Gender GetGenderById(int genderId);
+        void CreateGender(Gender gender);
+        void DeleteGender(Gender gender);
+        void EditGender(Gender gender);
+    }
 }
