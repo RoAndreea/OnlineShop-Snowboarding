@@ -34,7 +34,7 @@ body {
 
 .container1 {
     width: 900px;
-    margin: 250px auto 0;
+    margin: 100px auto 0;
     display: flex;
 }
 
@@ -99,6 +99,7 @@ body {
         .container1 .box1 .details:nth-child(2) .details {
             background: #607d8b;
         }
+
 
 
 /* Hide/rearrange for smaller screens */

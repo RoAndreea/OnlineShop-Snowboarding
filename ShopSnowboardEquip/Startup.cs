@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Facebook;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -14,9 +15,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using ShopSnowboardEquip.Data;
 using ShopSnowboardEquip.Data.interfaces;
-using ShopSnowboardEquip.Data.mocks;
 using ShopSnowboardEquip.Data.Models;
 using ShopSnowboardEquip.Data.Repositories;
+
 
 namespace ShopSnowboardEquip
 {
@@ -53,6 +54,7 @@ namespace ShopSnowboardEquip
 			//Authentication, Identity config
 			services.AddIdentity<IdentityUser, IdentityRole>()
 				.AddEntityFrameworkStores<AppDbContext>();
+			 
 
 			services.AddDbContext<AppDbContext>(options => options
 					.UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection")));
@@ -62,12 +64,26 @@ namespace ShopSnowboardEquip
 			services.AddTransient<IOrderRepository, OrderRepository>();
 			services.AddTransient<IGenderRepository, GenderRepository>();
 
+
 			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 			services.AddScoped(sp => ShoppingCart.GetCart(sp));
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 			services.AddMemoryCache();
 			services.AddSession();
+
+
+
+			services.AddAuthentication().AddFacebook(facebookOptions =>
+			{
+				facebookOptions.AppId = "2247888648864429";
+				facebookOptions.AppSecret = "64b174ef7271171ef5aaad7111627246";
+			});
+
+
+
+
+
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -89,7 +105,10 @@ namespace ShopSnowboardEquip
 			app.UseStaticFiles();
 			app.UseCookiePolicy();
 			app.UseSession();
-			app.UseIdentity();
+		//	app.UseIdentity();
+			app.UseAuthentication();
+			
+
 			app.UseMvc(routes =>
 			{
 				routes.MapRoute(

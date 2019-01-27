@@ -1,23 +1,74 @@
 ﻿@{
-    ViewData["Title"] = "Contact";
+	ViewData["Title"] = "Contact";
+	
 }
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="~/css/site.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="~/css/site.css">
+	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Rock+Salt" />
+
+
+	<meta name="viewport" content="initial-scale=1.0">
+	<meta charset="utf-8">
+	<style>
+		/* Always set the map height explicitly to define the size of the div
+		* element that contains the map. */
+		#map {
+			height: 400px;
+			// width : 400px;
+			margin-top: 3%;
+		}
+
+		h2 {
+			font - family: "Rock Salt";
+			font - size: 24px;
+			font - style: normal;
+			font - variant: normal;
+			font - weight: 700;
+			line - height: 26.4px;
+			margin-top: 4%;
+			color: darkblue;
+			text-align: center;
+		}
+
+		.container1 {
+			margin-top: 100px;
+		}
+		/* Optional: Makes the sample page fill the window. */
+
+	</style>
 </head>
-<div class="container1">
-    <div class="box1">
-        <div class="icon"><i class="fa fa-map-marker" aria-hidden="true"></i></div>
-        <div class='details'><h3>Romania, Bucharest</h3></div>
-    </div>
+<body>
+	<h2>You can find us here :)</h2>
+	<div id="map"></div>
+	<script>
+		function initMap() {
+			// The location of Uluru
+			var uluru = { lat: 44.435448, lng: 26.099743 };
+			// The map, centered at Uluru
+			var map = new google.maps.Map(
+				document.getElementById('map'), { zoom: 18, center: uluru });
+			// The marker, positioned at Uluru
+			var marker = new google.maps.Marker({ position: uluru, map: map });
+		}
+	</script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgMrwO0H8v8S_3ujWM0fWhn5Q6U-x7R44&callback=initMap"
+			async defer></script>
 
-    <div class="box1">
-        <div class="icon"><i class="fa fa-phone" aria-hidden="true"></i></div>
-        <div class='details'><h3>021 222 333</h3></div>
-    </div>
+	<div class="container1">
+		<div class="box1">
+			<div class="icon"><i class="fa fa-map-marker" aria-hidden="true"></i></div>
+			<div class='details'><h3>Romania, Bucharest</h3></div>
+		</div>
 
-    <div class="box1">
-        <div class="icon"><i class="fa fa-envelope" aria-hidden="true"></i></div>
-        <div class='details'><h3>SnowEquip@gmail.com</h3></div>
-    </div>
-</div>
+		<div class="box1">
+			<div class="icon"><i class="fa fa-phone" aria-hidden="true"></i></div>
+			<div class='details'><h3>021 222 333</h3></div>
+		</div>
+
+		<div class="box1">
+			<div class="icon"><i class="fa fa-envelope" aria-hidden="true"></i></div>
+			<div class='details'><h3>SnowEquip@gmail.com</h3></div>
+		</div>
+	</div>
+</body>
