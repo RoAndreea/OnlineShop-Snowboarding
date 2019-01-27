@@ -34,4 +34,13 @@
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <meta name="google-signin-client_id" content="182299640286-k89dh177llmgkdc9og9be3qrbfog393b.apps.googleusercontent.com">
-<div class="g-signin2" data-onsuccess="onSignIn"style="margin-left: 200px!important"></div>
+<div class="g-signin2" data-onsuccess="onSignIn" style="margin-left: 49%!important"></div>
+<a href="#" style="margin-left:52%!important" onclick="signOut();">Sign out</a>
+<script>
+	function signOut() {
+		var auth2 = gapi.auth2.getAuthInstance();
+		auth2.signOut().then(function () {
+			console.log('User signed out.');
+		});
+	}
+</script>
