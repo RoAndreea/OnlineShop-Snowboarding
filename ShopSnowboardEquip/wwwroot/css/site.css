@@ -100,12 +100,16 @@ body {
             background: #607d8b;
         }
 
+        .abcRioButtonLightBlue {
+            background-color: #fff;
+            color: #757575;
+            margin-left: 200px!important;
+        }
 
-
-/* Hide/rearrange for smaller screens */
-@media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
-        display: none;
+    /* Hide/rearrange for smaller screens */
+    @media screen and (max-width: 767px) {
+        /* Hide captions */
+        .carousel-caption {
+            display: none;
+        }
     }
-}
